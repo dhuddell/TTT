@@ -62,6 +62,8 @@ body {
 }
 .square{
   margin:0 auto;
+  text-align: center;
+  font-size: 150px;
   float:left;
   width: 32.5%;
   height: 32.5%;

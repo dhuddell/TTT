@@ -11,55 +11,70 @@ var gameBoard = {
   'h': null,
   'i': null
 }
-
-// Initialize class losses .text
-var loss = 0;
-$('.losses').val(loss);
-$('.losses').text($('.losses').val());
-
-
-// Initialize class wins .text
-var win = 0;
-$(".wins").val(win);
-$('.wins').text($('.wins').val());
-
 //    JQUERY    JQUERY    JQUERY    JQUERY
 $(document).ready(function(){
   //  SQUARE clickhandler
   $('.square').on('click', function(){
     gameBoard[this.id] = 'x';
-    $(this).css('background-color', '#000000');
+    $(this).text('X');
+    getWinner();
+
   });
     //Change DOM to contain X
   $('.square').on('click', function(){
-    getWinner();
+  //  getTie();
   });
 
 });
 
 ////////////////////////////////////////////////////////
+//Clear board on win
+var clearBoard = function(){
+  for(var key in gameBoard){
+    gameBoard[key] = null;
+  }
+}
 
+// Initialize class wins and store in .text
+var wins = 0;
+$('.wins').text(wins);
+
+// Initialize class losses .text
+var losses = 0;
+$('.losses').text(losses);
 
 ////////////////////////////////////////////////////////
 function getWinner() {
 
   if (winnerIs('x')) {
-    var wins = $(".wins").val();
-    var total = wins+1;
-    $('.wins').text(total);
+    ++wins;
+    $('.wins').text(wins);
+    clearBoard();
     alert('You have won!');
+    $('.square').text('');
     return 'x';
   }
   if (winnerIs('o')) {
-    var losses = $(".losses").val();
-    var total = losses+1;
-    $('.losses').text(total);
+    ++losses;
+    $('.losses').text(losses);
+    clearBoard();
     alert('You have lost!');
+    $('.square').text('');
     return 'o';
   }
   return null;
 }
 ////////////////////////////////////////////////////////
+// var getTie = function(){
+//   for(var key in gameBoard){
+//     if(gameBoard[key]){
+//       alert('Tie game!');
+//       clearBoard();
+//       $('.square').text('');
+//       return null;
+//     }
+// }
+
 
 ////////////////////////////////////////////////////////
 //get opponent move
@@ -67,24 +82,6 @@ var opponentMove = function(){
   //Waits for update from AJAX on div (lines up to gameBoard(location))
     //this changes value of location to opponent
 }
-
-
-////////////////////////////////////////////////////////
- //This will increment the win/lose counters on the DOM
-  // It will take 'winner' from the output of getWinner
-var winCount = 0;
-var loseCount = 0;
-
-function winCounter(winner){
-  if(winner == 'x'){
-    winCount++;
-  } else if (winner == 'o'){
-    loseCount++;
-  }
-  return null;
-}
-
-
 
 ////////////////////////////////////////////////////////
 function winnerIs(player) {
@@ -116,3 +113,15 @@ function allThree(player, cellOne, cellTwo, cellThree) {
 
 
 ////////////////////////////////////////////////////////
+
+//var foundOpponent = true;
+
+//**NEED AJAX request for opponent AND changeState function **
+//if (!opponent){foundOpponent = false};
+//if(foundOpponent){
+//   var yourTurn = true;
+// }
+//**NEED TO ADD  the switch yourTurn function**
+
+
+//NEED RESET GAME FUNCTION
