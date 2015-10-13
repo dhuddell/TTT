@@ -1,3 +1,11 @@
+// remove all alerts(win/loss/tie)
+// add local(2player) vs Remote
+// clean up annotation
+// align gameBoard with ajax array
+
+
+
+
 'use strict';
 
 var gameBoard = {
@@ -11,35 +19,36 @@ var gameBoard = {
   'h': null,
   'i': null
 }
+var totalMoves = 0;
 //    JQUERY    JQUERY    JQUERY    JQUERY
 $(document).ready(function(){
   //  SQUARE clickhandler
   $('.square').on('click', function(){
     gameBoard[this.id] = 'x';
     $(this).text('X');
+    ++totalMoves;
+    if(totalMoves == 9){getTie()}
     getWinner();
-
-  });
-    //Change DOM to contain X
-  $('.square').on('click', function(){
   //  getTie();
+  //  move();
   });
 
 });
 
 ////////////////////////////////////////////////////////
-//Clear board on win
+//Clear board on win/loss/tie
 var clearBoard = function(){
   for(var key in gameBoard){
-    gameBoard[key] = null;
-  }
+    gameBoard[key] = null}
+  $('.square').text('');
+  totalMoves = 0;
 }
 
-// Initialize class wins and store in .text
+// Initialize var wins and updates class .text
 var wins = 0;
 $('.wins').text(wins);
 
-// Initialize class losses .text
+// Initialize var losss and updates class .text
 var losses = 0;
 $('.losses').text(losses);
 
@@ -51,7 +60,6 @@ function getWinner() {
     $('.wins').text(wins);
     clearBoard();
     alert('You have won!');
-    $('.square').text('');
     return 'x';
   }
   if (winnerIs('o')) {
@@ -59,10 +67,24 @@ function getWinner() {
     $('.losses').text(losses);
     clearBoard();
     alert('You have lost!');
-    $('.square').text('');
     return 'o';
   }
   return null;
+}
+////////////////////////////////////////////////////////
+          //      2 PLAYER GAME
+var playerMove = 'x';
+//Need to fix
+var move = function(){
+  if(playerMove == 'x'){
+    gameBoard[this.id] = 'x';
+    $(this).text('X');
+    playerMove = 'o';
+  } else{
+    gameBoard[this.id] = 'o';
+    $(this).text('O');
+    playerMove = 'x';
+  }
 }
 ////////////////////////////////////////////////////////
 // var getTie = function(){
@@ -74,6 +96,10 @@ function getWinner() {
 //       return null;
 //     }
 // }
+var getTie = function(){
+    alert('This is a tie.');
+    clearBoard();
+}
 
 
 ////////////////////////////////////////////////////////
@@ -124,4 +150,3 @@ function allThree(player, cellOne, cellTwo, cellThree) {
 //**NEED TO ADD  the switch yourTurn function**
 
 
-//NEED RESET GAME FUNCTION
