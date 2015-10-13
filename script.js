@@ -57,7 +57,6 @@ function getWinner() {
     alert('You have lost!');
     return 'o';
   }
-  alert('Tie, you idiot!');
   return null;
 }
 ////////////////////////////////////////////////////////
