@@ -3,7 +3,6 @@
 .container {
   position: relative;
   width: 100%;
-  max-width: 960px;
   margin: 0 auto;
   padding: 0 20px;
   box-sizing: border-box; }
@@ -16,14 +15,14 @@
 /* For devices larger than 400px */
 @media (min-width: 400px) {
   .container {
-    width: 85%;
+    width: 100%;
     padding: 0; }
 }
 
 /* For devices larger than 550px */
-@media (min-width: 550px) {
+@media (min-width: 750px) {
   .container {
-    width: 80%; }
+    width: 100%; }
   .column,
   .columns {
     margin-left: 4%; }
@@ -82,4 +81,170 @@
   .offset-by-one-half.column,
   .offset-by-one-half.columns     { margin-left: 52%; }
 
+  .push-by-one                   { left: 8.66666666667%; }
+  .push-by-two                   { left: 17.3333333333%; }
+  .push-by-three                 { left: 25%; }
+  .push-by-four                  { left: 34.6666666667%; }
+  .push-by-five                  { left: 43.3333333333%; }
+  .push-by-six                   { left: 52%; }
+  .push-by-seven                 { left: 60.6666666667%; }
+  .push-by-eight                 { left: 69.3333333333%; }
+  .push-by-nine                  { left: 78.0%; }
+  .push-by-ten                   { left: 86.6666666667%; }
+  .push-by-eleven                { left: 95.3333333333%; }
+
+  .pull-by-one                   { right: 95.3333333333%; }
+  .pull-by-two                   { right: 86.6666666667%; }
+  .pull-by-three                 { right: 78.0%; }
+  .pull-by-four                  { right: 69.3333333333%; }
+  .pull-by-five                  { right: 34.6666666667%; }
+  .pull-by-six                   { right: 60.6666666667%; }
+  .pull-by-seven                 { right: 50%; }
+  .pull-by-eight                 { right: 43.3333333333%; }
+  .pull-by-nine                  { right: 26%; }
+  .pull-by-ten                   { right: 17.3333333333%; }
+  .pull-by-eleven                { right: 8.66666666667%; }
+
+/* Buttons
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.button,
+button,
+input[type="submit"],
+input[type="reset"],
+input[type="button"] {
+  font-family: "Sue Ellen Francisco";
+  display: inline-block;
+  height: 45px;
+  width: 30%;
+  padding: 0 30px;
+  color: white;
+  background-color: darkturquoise;
+  text-align: center;
+  font-size: 0.75em;
+  font-weight: 600;
+  line-height: 38px;
+  letter-spacing: .5rem;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  border-radius: 4px;
+  border: 3px solid darkturquoise;
+  cursor: pointer;
+  box-sizing: border-box; }
+.button:hover,
+button:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+input[type="button"]:hover,
+.button:focus,
+button:focus,
+input[type="submit"]:focus,
+input[type="reset"]:focus,
+input[type="button"]:focus {
+  color: darkturquoise;
+  background-color: white;
+  border-color: darkturquoise;
+  outline: 0; }
+.button.button-primary,
+button.button-primary,
+input[type="submit"].button-primary,
+input[type="reset"].button-primary,
+input[type="button"].button-primary {
+  color: #FFF;
+  background-color: #33C3F0;
+  border-color: #33C3F0; }
+.button.button-primary:hover,
+button.button-primary:hover,
+input[type="submit"].button-primary:hover,
+input[type="reset"].button-primary:hover,
+input[type="button"].button-primary:hover,
+.button.button-primary:focus,
+button.button-primary:focus,
+input[type="submit"].button-primary:focus,
+input[type="reset"].button-primary:focus,
+input[type="button"].button-primary:focus {
+  color: #FFF;
+  background-color: #1EAEDB;
+  border-color: #1EAEDB; }
+
+
+}
+
+/* Forms
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="text"],
+input[type="tel"],
+input[type="url"],
+input[type="password"],
+textarea,
+select {
+  font-family: "Sue Ellen Francisco";
+  font-size: .75em;
+  height: 50px;
+  padding: 6px 10px; /* The 6px vertically centers text on FF, ignored by Webkit */
+  background-color: darkturquoise;
+  color:white;
+  border: 1px solid #D1D1D1;
+  border-radius: 4px;
+  box-shadow: none;
+  box-sizing: border-box; }
+/* Removes awkward default styles on some inputs for iOS */
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="text"],
+input[type="tel"],
+input[type="url"],
+input[type="password"],
+textarea {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none; }
+textarea {
+  font-family: "Sue Ellen Francisco";
+
+  height: 60px;
+  padding-top: 6px;
+  padding-bottom: 6px; }
+input[type="email"]:focus,
+input[type="number"]:focus,
+input[type="search"]:focus,
+input[type="text"]:focus,
+input[type="tel"]:focus,
+input[type="url"]:focus,
+input[type="password"]:focus,
+textarea:focus,
+select:focus {
+  font-family: 'Sue Ellen Francisco';
+  min-height: 60px;
+  font-size: .75em;
+  border: 1px solid #33C3F0;
+  outline: 0; }
+label,
+legend {
+  display: block;
+  margin-bottom: .5rem;
+  font-weight: 600; }
+fieldset {
+  padding: 0;
+  border-width: 0; }
+input[type="checkbox"],
+input[type="radio"] {
+  display: inline; }
+label > .label-body {
+  display: inline-block;
+  margin-left: .5rem;
+  font-weight: normal; }
+
+/*-------------------WORK ON THIS---------------*/
+@media (max-width: 750px) {
+.middle_column{
+  width: 100%
+}
+.side{
+  width: 50%;
+}
 }

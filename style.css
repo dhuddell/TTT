@@ -1,12 +1,10 @@
 body {
-  background-color: coral;
   min-width: 550px;
   width:100%;
   height: 100%;
   margin: 0px;
   font-family: "Sue Ellen Francisco";
   color: white;
-
 }
 
 .status_bar{
@@ -16,68 +14,77 @@ body {
   height: 70px;
   width:100%;
 }
+.remote,
+.local{
+  border-color:white;
+}
+.landing{
+  margin-top: 100px;
+}
+.start{
+  text-align: center;
+  color:darkturquoise;
+  font-size: 2.2em;
+  position: relative;
+  background-color:white;
+  width:100%;
+  height:910px;
+}
 .container{
+  position: relative;
   background-color:lightgrey;
   width:100%;
   height:910px;
 }
 .left_column{
+  position: relative;
   float:left;
-  background-color: teal;
+  background-color: darkturquoise;
   width: 25%;
   height: 100%;
 }
 
 .right_column{
+  position: relative;
   float:left;
-  background-color: teal;
+  background-color: darkturquoise;
   width: 25%;
   height: 100%;
 }
 .middle_column{
-  margin:0 auto;
+  position: relative;
   float:left;
-  background-color: teal;
+  background-color: white;
   width: 50%;
-  min-width: 750px;
   height: 100%;
-
 }
 
 .turn_banner{
   margin:0 auto;
-  font-size: 300%;
+  font-size: 3.2em;
   text-align: center;
+  color: darkturquoise;
+  letter-spacing: .5rem;
   float:none;
   width:100%;
   height: 10%;
-  background-color: #009966;
+  color: darkturquoise;
 }
 .game_space{
-  margin:0 auto;
-  float:none;
+  float:left;
   width:100%;
-  height: 80%;
-  background-color: #006666;
+  height: 86.5%;
 }
 .square{
-  margin:0 auto;
+  display: inline-block;
   text-align: center;
   font-size: 150px;
   float:left;
-  width: 32.5%;
-  height: 32.5%;
-  background-color: #00CC66;
-  margin: 3px;
-}
-.chat{
-  margin:0 auto;
-  font-size: 40px;
-  text-align: center;
-  float:none;
-  width:100%;
-  height: 10%;
-  background-color: #99CCFF;
+  width: 32%;
+  height: 33%;
+  background-color: darkturquoise;
+  margin: 0 0 1% 1%;
+
 }
 .counter{
   margin:0 auto;
@@ -87,7 +94,7 @@ body {
   float:none;
   width:100%;
   height: 80%;
-  background-color: steelblue;
+  background-color: darkturquoise;
 }
 .token_selector{
   margin:0 auto;
