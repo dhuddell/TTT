@@ -2,7 +2,10 @@
 <head>
   <link rel="stylesheet" type="text/css" href="style.css">
   <link rel="stylesheet" type="text/css" href="grid.css">
-<link href='https://fonts.googleapis.com/css?family=Sue+Ellen+Francisco' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Sue+Ellen+Francisco' rel='stylesheet' type='text/css'>
+  <link rel="icon"
+        type="image/png"
+        href="favicon.ico">
   <meta charset="utf-8">
   <title>Ticky-Tacky, Totes</title>
 </head>
@@ -11,6 +14,10 @@
       <div class="status_bar">
         <button type="button" class="remote">Remote Game</button>
         <button type="button" class="local">Local Game</button>
+        <button type="button" class="new_game secondary">New Game</button>
+        <button type="button" class="join_game secondary">Join Game</button>
+        <input type='text' id="game_id" style="background-color: white; color: darkturquoise">
+        <button type="button" class="enter_game">ENTER!</button>
       </div>
     </header><!-- /header -->
 
@@ -18,24 +25,21 @@
     <div class="start">
       <div id="register_form">
       <form  name="register" class='landing'>
-      FAKE BUT UNIQUE REGISTER EMAIL<input type='text' id='user_email'>
+
+      FAKE BUT UNIQUE REGISTER EMAIL<input type='text' id='user_email' placeholder='Fake thinG'>
       PW<input type='text' id='user_pw'>
       PW Confirm<input type='text' id='user_pwc'>
       </form>
-
       <button type="submit" form="register" id='register_submit'>Register</button>
       </div>
+
       <br>
       <form  name="login">
-      SAME FAKE BUT UNIQUE LOGIN EMAIL<input type='text' id='login_email'>
-      PW<input type='text' id='login_pw'>
-            </form>
-
+      SAME FAKE BUT UNIQUE LOGIN EMAIL<input type='text' placeholder="Same fake thinG" id='login_email'>
+      PW<input type='text'  id='login_pw'>
+      </form>
       <button type="submit" form="login" id='login_submit'>Submit</button>
-
-
-
-    </div>
+     </div>
     <!-- END OF THE LANDING LOGIN/REGISTER -->
 
     <div class="container">
@@ -55,11 +59,15 @@
       </div>
       <div class="side left_column pull-by-seven">
         <div class="counter wins"></div>
-        <div class="player-token"></div>
+        <div class="token_selector">X marks the spot
+          <button type="button" class="x Token" style='display:none' >Change the X</button>
+        </div>
       </div>
       <div class="side right_column">
         <div class="counter losses"></div>
-        <div class="opponent-token"></div>
+        <div class="token_selector">O needs a shot
+          <button type="button" class="o Token" style='display:none' >Change the O</button>
+        </div>
       </div>
     </div>
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"> </script>

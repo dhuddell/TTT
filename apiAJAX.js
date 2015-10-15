@@ -96,6 +96,7 @@ var tttapi = {
       dataType: 'json'
     }, callback);
   },
+//MY ADDITION
 
   endGame: function (id, data, token, callback) {
     this.ajax({
