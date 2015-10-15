@@ -1,27 +1,76 @@
 <!DOCTYPE html>
 <head>
   <link rel="stylesheet" type="text/css" href="style.css">
-<link href='https://fonts.googleapis.com/css?family=Sue+Ellen+Francisco' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="grid.css">
+  <link href='https://fonts.googleapis.com/css?family=Sue+Ellen+Francisco' rel='stylesheet' type='text/css'>
+  <link rel="icon"
+        type="image/png"
+        href="favicon.ico">
   <meta charset="utf-8">
   <title>Ticky-Tacky, Totes</title>
 </head>
 <body>
     <header id="header" class="">
-      <div class="status_bar">LOOKING FOR COMPETITOR</div>
+      <div class="status_bar">
+        <button type="button" class="remote">Remote Game</button>
+        <button type="button" class="local">Local Game</button>
+        <button type="button" class="new_game secondary">New Game</button>
+        <button type="button" class="join_game secondary">Join Game</button>
+        <input type='text' id="game_id" style="background-color: white; color: darkturquoise">
+        <button type="button" class="enter_game">ENTER!</button>
+      </div>
     </header><!-- /header -->
+
+    <!-- THIS IS THE LANDING LOGIN/REGISTER -->
+    <div class="start">
+      <div id="register_form">
+      <form  name="register" class='landing'>
+
+      FAKE BUT UNIQUE REGISTER EMAIL<input type='text' id='user_email' placeholder='Fake thinG'>
+      PW<input type='text' id='user_pw'>
+      PW Confirm<input type='text' id='user_pwc'>
+      </form>
+      <button type="submit" form="register" id='register_submit'>Register</button>
+      </div>
+
+      <br>
+      <form  name="login">
+      SAME FAKE BUT UNIQUE LOGIN EMAIL<input type='text' placeholder="Same fake thinG" id='login_email'>
+      PW<input type='text'  id='login_pw'>
+      </form>
+      <button type="submit" form="login" id='login_submit'>Submit</button>
+     </div>
+    <!-- END OF THE LANDING LOGIN/REGISTER -->
+
     <div class="container">
-      <div class="side_column">
-        <div class="counter">0</div>
-        <div class="token_selector"></div>
+      <div class="middle_column push-by-three">
+        <div class="turn_banner"></div>
+        <div class="game_space">
+          <div class="square" id="a" data-index="0"></div>
+          <div class="square" id="b" data-index="1"></div>
+          <div class="square" id="c" data-index="2"></div>
+          <div class="square" id="d" data-index="3"></div>
+          <div class="square" id="e" data-index="4"></div>
+          <div class="square" id="f" data-index="5"></div>
+          <div class="square" id="g" data-index="6"></div>
+          <div class="square" id="h" data-index="7"></div>
+          <div class="square" id="i" data-index="8"></div>
+        </div>
       </div>
-      <div class="middle_column">
-        <div class="turn_banner">Your turn! Your turn! Your turn! Your turn! Your turn!</div>
-        <div class="game_space"></div>
-        <div class="chat">This is where the talking happens</div>
+      <div class="side left_column pull-by-seven">
+        <div class="counter wins"></div>
+        <div class="token_selector">X marks the spot
+          <button type="button" class="x Token" style='display:none' >Change the X</button>
+        </div>
       </div>
-      <div class="side_column">
-        <div class="counter">0</div>
-        <div class="token_selector"></div>
+      <div class="side right_column">
+        <div class="counter losses"></div>
+        <div class="token_selector">O needs a shot
+          <button type="button" class="o Token" style='display:none' >Change the O</button>
+        </div>
       </div>
     </div>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"> </script>
+  <script type="text/javascript" src="apiAJAX.js"></script>
+  <script type="text/javascript" src="script.js"></script>
 </body>
