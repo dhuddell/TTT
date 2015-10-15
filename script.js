@@ -57,7 +57,6 @@ $(document).ready(function(){
       if (err) {
         console.error(err);
       }
-      console.log(data);
       $('#register_form').hide();
     })
   });
@@ -74,6 +73,7 @@ $(document).ready(function(){
         if (err) {
           console.error(err);
         }
+        console.log(data);
         game.token = data.user.token;
         $('.start').slideUp(400);
         $('.turn_banner').text("^ TicTacToe! Pick then Go. ^");

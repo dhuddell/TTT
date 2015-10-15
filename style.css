@@ -31,6 +31,9 @@ body {
 .landing{
   margin-top: 100px;
 }
+::-webkit-input-placeholder {
+   color: rgba(255, 255, 255, 0.80);
+}
 .start{
   text-align: center;
   color:darkturquoise;
