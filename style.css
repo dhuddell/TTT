@@ -15,11 +15,24 @@ body {
   width:100%;
 }
 .remote,
-.local{
+.local,
+.new_game,
+.join_game,
+.enter_game {
   border-color:white;
+}
+
+.new_game,
+.join_game,
+.enter_game,
+#game_id{
+  display: none;
 }
 .landing{
   margin-top: 100px;
+}
+::-webkit-input-placeholder {
+   color: rgba(255, 255, 255, 0.80);
 }
 .start{
   text-align: center;
@@ -98,10 +111,19 @@ body {
 }
 .token_selector{
   margin:0 auto;
-  float:none;
+  float:left;
+  text-align: center;
+  font-size: 4.8em;
   width:100%;
   height: 20%;
+}
+
+.Token{
+  margin: 0 auto;
   background-color: palegoldenrod;
+  width: 50%;
+  text-align: center;
+
 }
 @media (max-width: 500px) {
   .middle_column{
