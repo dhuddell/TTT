@@ -16,8 +16,10 @@
         <button type="button" class="local">Local Game</button>
         <button type="button" class="new_game secondary">New Game</button>
         <button type="button" class="join_game secondary">Join Game</button>
+        <button type="button" class="new_game_remote">New Game</button>
         <input type='text' id="game_id" style="background-color: white; color: darkturquoise">
         <button type="button" class="enter_game">ENTER!</button>
+        <button type="button" class="enter_game_remote">ENTER!</button>
       </div>
     </header><!-- /header -->
 
@@ -26,17 +28,17 @@
       <div id="register_form">
       <form  name="register" class='landing'>
 
-      FAKE BUT UNIQUE REGISTER EMAIL<input type='text' id='user_email' placeholder='Fake thinG'>
-      PW<input type='text' id='user_pw'>
-      PW Confirm<input type='text' id='user_pwc'>
+      PICK A FAKE BUT UNIQUE REGISTER EMAIL<input type='text' id='user_email' placeholder='Fake thinG'>
+      PW<input type='password' id='user_pw'>
+      PW Confirm<input type='password' id='user_pwc'>
       </form>
       <button type="submit" form="register" id='register_submit'>Register</button>
       </div>
 
       <br>
       <form  name="login">
-      SAME FAKE BUT UNIQUE LOGIN EMAIL<input type='text' placeholder="Same fake thinG" id='login_email'>
-      PW<input type='text'  id='login_pw'>
+      SAME FOR LOGIN, MAYBE YOUR GMAIL?<input type='text' placeholder="Same fake thinG" id='login_email'>
+      PW<input type='password'  id='login_pw'>
       </form>
       <button type="submit" form="login" id='login_submit'>Submit</button>
      </div>
@@ -72,5 +74,7 @@
     </div>
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"> </script>
   <script type="text/javascript" src="apiAJAX.js"></script>
+  <script type="text/javascript" src="end_cond.js"></script>
+  <script type="text/javascript" src="win_tie.js"></script>
   <script type="text/javascript" src="script.js"></script>
 </body>

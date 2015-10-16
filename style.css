@@ -18,14 +18,19 @@ body {
 .local,
 .new_game,
 .join_game,
-.enter_game {
+.enter_game{
   border-color:white;
 }
 
+.remote,
+.local,
 .new_game,
 .join_game,
 .enter_game,
-#game_id{
+.enter_game_remote,
+#game_id,
+.new_game_remote,
+.join_game_remote {
   display: none;
 }
 .landing{

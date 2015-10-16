@@ -211,7 +211,11 @@ $(function() {
     var gameWatcher = tttapi.watchGame(id, token);
 
     gameWatcher.on('change', function(data){
+        alert("YO");
       var parsedData = JSON.parse(data);
+      waiting = false;
+      ++totalMoves;
+      $('.turn_banner').text("You're up, pup!");
       if (data.timeout) { //not an error
         this.gameWatcher.close();
         return console.warn(data.timeout);
