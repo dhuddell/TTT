@@ -15,15 +15,15 @@
 'use strict';
 
 var gameBoard = {
-  'a': null,
-  'b': null,
-  'c': null,
-  'd': null,
-  'e': null,
-  'f': null,
-  'g': null,
-  'h': null,
-  'i': null
+  'a': '',
+  'b': '',
+  'c': '',
+  'd': '',
+  'e': '',
+  'f': '',
+  'g': '',
+  'h': '',
+  'i': ''
 }
 
 var game = {}
@@ -35,6 +35,7 @@ var playerX = true;
 var xToken = 'X';
 var oToken = 'O';
 var waiting;
+var joined;
 var wins = 0;
 $('.wins').text(wins);
 var losses = 0;
@@ -73,6 +74,7 @@ $(document).ready(function(){
         }
         game.token = data.user.token;
         $('.start').slideUp(400);
+        showButtons();
         $('.turn_banner').text("^ TicTacToe! Pick then Go. ^");
 
       }
@@ -95,7 +97,7 @@ $(document).ready(function(){
   });
 
 ////////////////////////////////////////////////////////
-//        SECONDARY BUTTONS->CREATE AND JOIN/ENTER
+//        SECONDARY and REMOTE BUTTONS->CREATE AND JOIN/ENTER
 
   $('.new_game').click(function(){
     tttapi.createGame(game.token, function(err, data){
@@ -112,16 +114,36 @@ $(document).ready(function(){
     }
   });
 
+$('.new_game_remote').click(function(){
+    tttapi.createGame(game.token, function(err, data){
+      if (err) {console.error(err)}
+      game.id = data.game.id;
+    });
+    joined = false;
+    waiting = false;
+    hideSecondary();
+    defineMove();
+    $(".square").css("pointer-events", "auto");
+    if(playerX === true){
+      $('.turn_banner').text("X's turn, FLEX!");
+    } else {
+      $('.turn_banner').text("O's turn, YO!");
+    }
+  });
+
+
 // JOIN CLICK HANDLER
   $('.join_game').click(function(){
     $('#game_id').show();
-    $('.enter_game').show();
+    if(remote === false){
+      $('.enter_game').show();
+    } else {$('.enter_game_remote').show();}
     hideSecondary();
   });
 
 // ENTER GAME CLICK HANDLER
   $('.enter_game').click(function(){
-    tttapi.joinGame(document.getElementById('game_id').value, game.token, function(err, data){
+    tttapi.showGame(document.getElementById('game_id').value, game.token, function(err, data){
       if (err) {console.error(err)}
       game.id = data.game.id;
       console.log(game.id);
@@ -146,27 +168,70 @@ $(document).ready(function(){
       $('#i').html(gameBoard['i'].toUpperCase());
     });
     hideSecondary();
+    $('#game_id').hide();
+    $('.enter_game').hide();
     defineMove();
     $(".square").css("pointer-events", "auto");
     if(playerX === true){
       $('.turn_banner').text("X's turn, FLEX!");
     } else {
       $('.turn_banner').text("O's turn, YO!");
-    }
+    };
+
+  });
+
+$('.enter_remote_game').click(function(){
+    tttapi.joinGame(document.getElementById('game_id').value, game.token, function(err, data){
+      if (err) {console.error(err)}
+      tttapi.watchGame(document.getElementById('game_id').value, game.token);
+      game.id = data.game.id;
+      console.log(game.id);
+      console.log(data);
+      gameBoard['a'] = data.game.cells[0];
+      gameBoard['b'] = data.game.cells[1];
+      gameBoard['c'] = data.game.cells[2];
+      gameBoard['d'] = data.game.cells[3];
+      gameBoard['e'] = data.game.cells[4];
+      gameBoard['f'] = data.game.cells[5];
+      gameBoard['g'] = data.game.cells[6];
+      gameBoard['h'] = data.game.cells[7];
+      gameBoard['i'] = data.game.cells[8];
+      $('#a').html(gameBoard['a'].toUpperCase());
+      $('#b').html(gameBoard['b'].toUpperCase());
+      $('#c').html(gameBoard['c'].toUpperCase());
+      $('#d').html(gameBoard['d'].toUpperCase());
+      $('#e').html(gameBoard['e'].toUpperCase());
+      $('#f').html(gameBoard['f'].toUpperCase());
+      $('#g').html(gameBoard['g'].toUpperCase());
+      $('#h').html(gameBoard['h'].toUpperCase());
+      $('#i').html(gameBoard['i'].toUpperCase());
+    });
+    joined = true;
+    waiting = true;
+    hideSecondary();
+    $('#game_id').hide();
+    $('.enter_game').hide();
+    defineMove();
+    $(".square").css("pointer-events", "auto");
+    if(playerX === true){
+      $('.turn_banner').text("X's turn, FLEX!");
+    } else {
+      $('.turn_banner').text("O's turn, YO!");
+    };
 
   });
 });
 
 var defineMove = function defineMove(){
   if(remote === true){
-    $('.square').click(remoteMove);
+    $('.square').on('click', remoteMove);
   } else {$('.square').on('click', localMove)}
 };
 
 ////////////////////////////////////////////////////////
 //    LOCAL GAME MOVE FUNCTION
 var localMove = function localMove(){
-    if(gameBoard[this.id] === null){
+    if(gameBoard[this.id] === ''){
       if(playerX === true){
         tttapi.markCell(game.id,
           {
@@ -209,19 +274,53 @@ var localMove = function localMove(){
 };
 
 //    REMOTE GAME MOVE FUNCTION
+
 var remoteMove = function remoteMove(){
-  console.log("Index : " + this.dataset.index);
-  if(gameBoard[this.id] === null){
-    gameBoard[this.id] = 'x';
-    $(this).html('X');
-    ++totalMoves;
-    if(getWinner()){
-      getWinner()
-    } else {getTie()}
-  }
+    if(waiting === false){
+      if(gameBoard[this.id] === ''){
+        if(joined === false){
+          tttapi.markCell(game.id,
+            {
+              "game": {
+                "cell": {
+                  "index": this.dataset.index,
+                  "value": "x"
+                }
+              }
+            }, game.token, function(err, data){
+              if(err){console.log(err)}
+            });
+          $(this).html(xToken);
+          gameBoard[this.id] = 'x';
+          ++totalMoves;
+        }
+       else{
+        tttapi.markCell(game.id,
+          {
+            "game": {
+              "cell": {
+                "index": this.dataset.index,
+                "value": "o"
+                }
+              }
+            }, game.token, function(err, data){
+              if(err){console.log(err)}
+            });
+          $(this).html(oToken);
+          gameBoard[this.id] = 'o';
+          ++totalMoves;
+        }
+      }
+
+    if (winnerIs('x')|| winnerIs('o')){
+      getWinner()} else{getTie()}
+    }
+    waiting = true;
+    $('.turn_banner').text('Give a min, twin');
+
 };
 ////////////////////////////////////////////////////////
-//     MAKE A GAME: OVER
+//     MAKE A GAME: OVER **NONFUNCTIONING**
 
 var markGameOver = function (){
   tttapi.endGame(
@@ -239,15 +338,12 @@ var markGameOver = function (){
     }
   );
 }
-////////////////////////////////////////////////////////
-//     REMOTE GAME (HERE PLEASE)
-
 
 ////////////////////////////////////////////////////////
 //    CLEAR BOARD/MOVE COUNTER
 var clearBoard = function clearBoard(){
   for(var key in gameBoard){
-    gameBoard[key] = null}
+    gameBoard[key] = ''}
   $('.square').html('');
   totalMoves = 0;
 }
@@ -274,95 +370,6 @@ var hideSecondary = function hideSecondary(){
   $('.join_game').hide();
 }
 
-////////////////////////////////////////////////////////
-//     ENDGAME FUNCTIONS
-
-var getWinner = function getWinner() {
-  if(!remote){
-    if (winnerIs('x')) {
-      ++wins;
-      $('.wins').text(wins);
-      showButtons();
-      $('.turn_banner').text("X's WIN - Gimmie some skin!");
-      $(".square").css("pointer-events", "none");
-    //  markGameOver();
-    }
-    if (winnerIs('o')) {
-      ++losses;
-      $('.losses').text(losses);
-      showButtons();
-      $('.turn_banner').text('O won, kind of a pun!');
-      $(".square").css("pointer-events", "none");
-    //  markGameOver();
-    }
-  } else{
-    if (winnerIs('x')) {
-      ++wins;
-      $('.wins').text(wins);
-      showButtons();
-      alert('You have won!');
-      $(".square").css("pointer-events", "none");
-    //  markGameOver();
-    }
-    if (winnerIs('o')) {
-      ++losses;
-      $('.losses').text(losses);
-      showButtons();
-      alert('You have lost!');
-      $(".square").css("pointer-events", "none");
-    //  markGameOver();
-    }
-    return null;
-  }
-}
-
-var getTie = function getTie(){
-  if(totalMoves == 9){
-    $('.turn_banner').text('A tie, sigh');
-    $(".square").css("pointer-events", "none");
-    showButtons();
-  }
-  //  markGameOver();
-}
-////////////////////////////////////////////////////////
-//get opponent move
-var opponentMove = function(){
-  //Waits for update from AJAX on div (lines up to gameBoard(location))
-    //this changes value of location to opponent
-}
-
-////////////////////////////////////////////////////////
-//    NAMES WINNER
-function winnerIs(player) {
-
-  return winsRow(player) || winsColumn(player) || winsDiagonal(player);
-}
-
-////////////////////////////////////////////////////////
-//    DECLARES WIN CONDITIONS
-function winsRow(player) {
-  return allThree(player, gameBoard['a'], gameBoard['b'], gameBoard['c']) ||
-         allThree(player, gameBoard['d'], gameBoard['e'], gameBoard['f']) ||
-         allThree(player, gameBoard['g'], gameBoard['h'], gameBoard['i']);
-}
-
-function winsColumn(player) {
-  return allThree(player, gameBoard['a'], gameBoard['d'], gameBoard['g']) ||
-         allThree(player, gameBoard['b'], gameBoard['e'], gameBoard['h']) ||
-         allThree(player, gameBoard['c'], gameBoard['f'], gameBoard['i']);
-}
-
-function winsDiagonal(player) {
-  return allThree(player, gameBoard['a'], gameBoard['e'], gameBoard['i']) ||
-         allThree(player, gameBoard['c'], gameBoard['e'], gameBoard['g']);
-}
-
-////////////////////////////////////////////////////////
-//    CATCHES THREE CELLS FOR WIN CONDITION
-function allThree(player, cellOne, cellTwo, cellThree) {
-
-  return (cellOne === player) && (cellTwo === player) && (cellThree === player);
-}
 
 
 
