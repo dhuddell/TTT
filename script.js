@@ -5,29 +5,23 @@
 //joinGame
 //startGame
 
-
-////////////////////////////////////////////////////////
-
-//var foundOpponent = true;
-
-//**NEED AJAX request for opponent AND changeState function **
+//DON"T FORGET STOOPID JoinGame and ShowGame
 
 'use strict';
 
-var gameBoard = {
-  'a': '',
-  'b': '',
-  'c': '',
-  'd': '',
-  'e': '',
-  'f': '',
-  'g': '',
-  'h': '',
-  'i': ''
-}
+var gameBoard = [
+  '',
+  '',
+  '',
+  '',
+  '',
+  '',
+  '',
+  '',
+  ''
+]
 
 var game = {}
-// game.token = abc123
 
 var totalMoves = 0;
 var remote = false;
@@ -41,6 +35,32 @@ $('.wins').text(wins);
 var losses = 0;
 $('.losses').text(losses);
 
+
+var watchGame = function(){
+    var gameWatcher = tttapi.watchGame(game.id, game.token);
+
+    gameWatcher.on('change', function(data){
+      debugger;
+      var parsedData = JSON.parse(data);
+
+      if (data.timeout) { //not an error
+        this.gameWatcher.close();
+        return console.warn(data.timeout);
+      }
+      var gameData = parsedData.game;
+      var cell = gameData.cell;
+      if(cell.value.toUpperCase() == 'O'){
+        waiting = false;
+        ++totalMoves;
+        $('.turn_banner').text("You're up, pup!");
+        $('#' + cell.index).text(cell.value.toUpperCase())
+        gameBoard[cell.index] = cell.value;
+      }
+    });
+    gameWatcher.on('error', function(e){
+      console.error('an error has occured with the stream', e);
+    });
+  };
 
 ////////////////////////////////////////////////////////
 //    JQUERY
@@ -86,13 +106,16 @@ $(document).ready(function(){
     remote = true;
     clearBoard();
     hideButtons();
-    showSecondary();
+    $('.turn_banner').text("^ TicTacToe! Pick then Go. ^");
+    $('.new_game_remote').show();
+    $('.join_game').show();
   });
 //LOCAL GAME BOX CLICK HANDLER
   $('.local').click(function(){
     remote = false;
     clearBoard();
     hideButtons();
+    $('.turn_banner').text("^ TicTacToe! Pick then Go. ^");
     showSecondary();
   });
 
@@ -118,17 +141,20 @@ $('.new_game_remote').click(function(){
     tttapi.createGame(game.token, function(err, data){
       if (err) {console.error(err)}
       game.id = data.game.id;
+
+    watchGame();
     });
+    //MAKE TURN CHECKER
+    $('.turn_banner').text("You're up, pup!");
+
+
     joined = false;
     waiting = false;
-    hideSecondary();
+    $('.new_game_remote').hide();
+    $('.join_game').hide();
     defineMove();
+    $('.turn_banner').text("You're up, pup.");
     $(".square").css("pointer-events", "auto");
-    if(playerX === true){
-      $('.turn_banner').text("X's turn, FLEX!");
-    } else {
-      $('.turn_banner').text("O's turn, YO!");
-    }
   });
 
 
@@ -139,33 +165,21 @@ $('.new_game_remote').click(function(){
       $('.enter_game').show();
     } else {$('.enter_game_remote').show();}
     hideSecondary();
+    $('.new_game_remote').hide();
   });
 
-// ENTER GAME CLICK HANDLER
+
+// ENTER GAME CLICK HANDLER NEED TO ADD TURN CHECK AND TURNCOUNT ITERATOR
   $('.enter_game').click(function(){
     tttapi.showGame(document.getElementById('game_id').value, game.token, function(err, data){
       if (err) {console.error(err)}
       game.id = data.game.id;
       console.log(game.id);
       console.log(data);
-      gameBoard['a'] = data.game.cells[0];
-      gameBoard['b'] = data.game.cells[1];
-      gameBoard['c'] = data.game.cells[2];
-      gameBoard['d'] = data.game.cells[3];
-      gameBoard['e'] = data.game.cells[4];
-      gameBoard['f'] = data.game.cells[5];
-      gameBoard['g'] = data.game.cells[6];
-      gameBoard['h'] = data.game.cells[7];
-      gameBoard['i'] = data.game.cells[8];
-      $('#a').html(gameBoard['a'].toUpperCase());
-      $('#b').html(gameBoard['b'].toUpperCase());
-      $('#c').html(gameBoard['c'].toUpperCase());
-      $('#d').html(gameBoard['d'].toUpperCase());
-      $('#e').html(gameBoard['e'].toUpperCase());
-      $('#f').html(gameBoard['f'].toUpperCase());
-      $('#g').html(gameBoard['g'].toUpperCase());
-      $('#h').html(gameBoard['h'].toUpperCase());
-      $('#i').html(gameBoard['i'].toUpperCase());
+      gameBoard = data.game.cells;
+       $('.square').each(function(index){
+        $(this).html(gameBoard[index].toUpperCase());
+      });
     });
     hideSecondary();
     $('#game_id').hide();
@@ -179,45 +193,33 @@ $('.new_game_remote').click(function(){
     };
 
   });
-
-$('.enter_remote_game').click(function(){
+// ENTER REMOTE GAME NEED TO ADD TURN CHECK AND TURNCOUNT ITERATOR
+$('.enter_game_remote').click(function(){
     tttapi.joinGame(document.getElementById('game_id').value, game.token, function(err, data){
-      if (err) {console.error(err)}
-      tttapi.watchGame(document.getElementById('game_id').value, game.token);
-      game.id = data.game.id;
+      if (err) {
+        return console.error(err);
+      }
+      game.id = document.getElementById('game_id').value;
       console.log(game.id);
       console.log(data);
-      gameBoard['a'] = data.game.cells[0];
-      gameBoard['b'] = data.game.cells[1];
-      gameBoard['c'] = data.game.cells[2];
-      gameBoard['d'] = data.game.cells[3];
-      gameBoard['e'] = data.game.cells[4];
-      gameBoard['f'] = data.game.cells[5];
-      gameBoard['g'] = data.game.cells[6];
-      gameBoard['h'] = data.game.cells[7];
-      gameBoard['i'] = data.game.cells[8];
-      $('#a').html(gameBoard['a'].toUpperCase());
-      $('#b').html(gameBoard['b'].toUpperCase());
-      $('#c').html(gameBoard['c'].toUpperCase());
-      $('#d').html(gameBoard['d'].toUpperCase());
-      $('#e').html(gameBoard['e'].toUpperCase());
-      $('#f').html(gameBoard['f'].toUpperCase());
-      $('#g').html(gameBoard['g'].toUpperCase());
-      $('#h').html(gameBoard['h'].toUpperCase());
-      $('#i').html(gameBoard['i'].toUpperCase());
+      gameBoard = data.game.cells;
+      $('.square').each(function(index){
+        $(this).html(gameBoard[index].toUpperCase());
+      });
+
+      watchGame();
     });
+    //MAKE TURN CHECKER
+    $('.turn_banner').text("You're up, pup!");
+
     joined = true;
-    waiting = true;
+    waiting = false;
     hideSecondary();
+    $('.enter_game_remote').hide();
     $('#game_id').hide();
     $('.enter_game').hide();
     defineMove();
     $(".square").css("pointer-events", "auto");
-    if(playerX === true){
-      $('.turn_banner').text("X's turn, FLEX!");
-    } else {
-      $('.turn_banner').text("O's turn, YO!");
-    };
 
   });
 });
@@ -275,7 +277,17 @@ var localMove = function localMove(){
 
 //    REMOTE GAME MOVE FUNCTION
 
-var remoteMove = function remoteMove(){
+// var message;
+// if(true) {
+//   message = "yes";
+// } else {
+//   message = "no";
+// }
+
+// console.log(message);
+
+var remoteMove = function remoteMove(event){
+  var self = event.target;
     if(waiting === false){
       if(gameBoard[this.id] === ''){
         if(joined === false){
@@ -283,32 +295,37 @@ var remoteMove = function remoteMove(){
             {
               "game": {
                 "cell": {
-                  "index": this.dataset.index,
+                  "index": self.dataset.index,
                   "value": "x"
                 }
               }
             }, game.token, function(err, data){
               if(err){console.log(err)}
-            });
-          $(this).html(xToken);
-          gameBoard[this.id] = 'x';
+
+          $(self).html(xToken);
+          gameBoard[self.dataset.index] = 'x';
           ++totalMoves;
+          });
         }
        else{
         tttapi.markCell(game.id,
           {
             "game": {
               "cell": {
-                "index": this.dataset.index,
+                "index": self.dataset.index,
                 "value": "o"
                 }
               }
             }, game.token, function(err, data){
-              if(err){console.log(err)}
-            });
-          $(this).html(oToken);
-          gameBoard[this.id] = 'o';
-          ++totalMoves;
+              if(err){
+                console.log(err)
+              }
+
+              $(self).html(oToken);
+              gameBoard[self.dataset.index] = 'o';
+              ++totalMoves;
+              });
+
         }
       }
 
@@ -316,7 +333,7 @@ var remoteMove = function remoteMove(){
       getWinner()} else{getTie()}
     }
     waiting = true;
-    $('.turn_banner').text('Give a min, twin');
+    $('.turn_banner').text('Wait a tick, slick');
 
 };
 ////////////////////////////////////////////////////////
@@ -340,10 +357,9 @@ var markGameOver = function (){
 }
 
 ////////////////////////////////////////////////////////
-//    CLEAR BOARD/MOVE COUNTER
+//    CLEAR BOARD/MOVE COUNTER *********** MAJOR CHANGE *************
 var clearBoard = function clearBoard(){
-  for(var key in gameBoard){
-    gameBoard[key] = ''}
+  gameBoard = ['','','','','','','','','']
   $('.square').html('');
   totalMoves = 0;
 }
