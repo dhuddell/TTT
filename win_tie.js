@@ -7,7 +7,7 @@ var getWinner = function getWinner() {
       ++wins;
       $('.wins').text(wins);
       showButtons();
-      $('.turn_banner').text("X's WIN - Gimmie some skin!");
+      $('.turn_banner').text("X's win - gimmie some skin!");
       $(".square").css("pointer-events", "none");
     //  markGameOver();
     }
@@ -24,7 +24,7 @@ var getWinner = function getWinner() {
       ++wins;
       $('.wins').text(wins);
       showButtons();
-      $('.turn_banner').text('winnawinna, chiqin dinnah!');
+      $('.turn_banner').text('Winner winner, chicken dinner');
       $(".square").css("pointer-events", "none");
     //  markGameOver();
     }
@@ -32,7 +32,7 @@ var getWinner = function getWinner() {
       ++losses;
       $('.losses').text(losses);
       showButtons();
-      $('.turn_banner').text('loser, boozer?');
+      $('.turn_banner').text('loser loser, bitter user?');
       $(".square").css("pointer-events", "none");
     //  markGameOver();
     }

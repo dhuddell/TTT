@@ -38,28 +38,35 @@ $('.losses').text(losses);
 
 var watchGame = function(){
     var gameWatcher = tttapi.watchGame(game.id, game.token);
-
     gameWatcher.on('change', function(data){
       var parsedData = JSON.parse(data);
-
       if (data.timeout) { //not an error
         this.gameWatcher.close();
         return console.warn(data.timeout);
       }
       var gameData = parsedData.game;
       var cell = gameData.cell;
-      if(cell.value.toUpperCase() == 'O'){
-        waiting = false;
-        ++totalMoves;
-        $('.turn_banner').text("You're up, pup!");
-        $('#' + cell.index).text(cell.value.toUpperCase())
-        gameBoard[cell.index] = cell.value;
-      }
+
+      if(joined){
+        remoteUpdate('x');
+      } else {remoteUpdate('o')};
+      if (winnerIs('x')|| winnerIs('o')){
+        getWinner()} else{getTie()}
     });
     gameWatcher.on('error', function(e){
       console.error('an error has occured with the stream', e);
     });
   };
+
+var remoteUpdate = function remoteUpdate(value){
+  if(cell.value.toUpperCase() == value){
+    waiting = false;
+    ++totalMoves;
+    $('.turn_banner').text("You're up, pup!");
+    $('#' + cell.index).text(cell.value.toUpperCase())
+    gameBoard[cell.index] = cell.value;
+  }
+}
 
 ////////////////////////////////////////////////////////
 //    JQUERY
