@@ -206,7 +206,7 @@ textarea {
 textarea {
   font-family: "Sue Ellen Francisco";
 
-  height: 60px;
+  height: 50px;
   padding-top: 6px;
   padding-bottom: 6px; }
 input[type="email"]:focus,
@@ -219,7 +219,7 @@ input[type="password"]:focus,
 textarea:focus,
 select:focus {
   font-family: 'Sue Ellen Francisco';
-  min-height: 60px;
+  min-height: 50px;
   font-size: .75em;
   border: 1px solid #33C3F0;
   outline: 0; }

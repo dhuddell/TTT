@@ -9,20 +9,20 @@ function winnerIs(player) {
 ////////////////////////////////////////////////////////
 //    DECLARES WIN CONDITIONS
 function winsRow(player) {
-  return allThree(player, gameBoard['a'], gameBoard['b'], gameBoard['c']) ||
-         allThree(player, gameBoard['d'], gameBoard['e'], gameBoard['f']) ||
-         allThree(player, gameBoard['g'], gameBoard['h'], gameBoard['i']);
+  return allThree(player, gameBoard[0], gameBoard[1], gameBoard[2]) ||
+         allThree(player, gameBoard[3], gameBoard[4], gameBoard[5]) ||
+         allThree(player, gameBoard[6], gameBoard[7], gameBoard[8]);
 }
 
 function winsColumn(player) {
-  return allThree(player, gameBoard['a'], gameBoard['d'], gameBoard['g']) ||
-         allThree(player, gameBoard['b'], gameBoard['e'], gameBoard['h']) ||
-         allThree(player, gameBoard['c'], gameBoard['f'], gameBoard['i']);
+  return allThree(player, gameBoard[0], gameBoard[3], gameBoard[6]) ||
+         allThree(player, gameBoard[1], gameBoard[4], gameBoard[7]) ||
+         allThree(player, gameBoard[2], gameBoard[5], gameBoard[8]);
 }
 
 function winsDiagonal(player) {
-  return allThree(player, gameBoard['a'], gameBoard['e'], gameBoard['i']) ||
-         allThree(player, gameBoard['c'], gameBoard['e'], gameBoard['g']);
+  return allThree(player, gameBoard[0], gameBoard[4], gameBoard[8]) ||
+         allThree(player, gameBoard[2], gameBoard[4], gameBoard[6]);
 }
 
 ////////////////////////////////////////////////////////

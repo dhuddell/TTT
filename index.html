@@ -7,16 +7,16 @@
         type="image/png"
         href="favicon.ico">
   <meta charset="utf-8">
-  <title>Ticky-Tacky, Totes</title>
+  <title>Ticky-Tacky? Totes!</title>
 </head>
 <body>
-    <header id="header" class="">
+    <header id="header" class="header">
       <div class="status_bar">
         <button type="button" class="remote">Remote Game</button>
         <button type="button" class="local">Local Game</button>
         <button type="button" class="new_game secondary">New Game</button>
-        <button type="button" class="join_game secondary">Join Game</button>
         <button type="button" class="new_game_remote">New Game</button>
+        <button type="button" class="join_game secondary">Join Game</button>
         <input type='text' id="game_id" style="background-color: white; color: darkturquoise">
         <button type="button" class="enter_game">ENTER!</button>
         <button type="button" class="enter_game_remote">ENTER!</button>
@@ -48,15 +48,15 @@
       <div class="middle_column push-by-three">
         <div class="turn_banner"></div>
         <div class="game_space">
-          <div class="square" id="a" data-index="0"></div>
-          <div class="square" id="b" data-index="1"></div>
-          <div class="square" id="c" data-index="2"></div>
-          <div class="square" id="d" data-index="3"></div>
-          <div class="square" id="e" data-index="4"></div>
-          <div class="square" id="f" data-index="5"></div>
-          <div class="square" id="g" data-index="6"></div>
-          <div class="square" id="h" data-index="7"></div>
-          <div class="square" id="i" data-index="8"></div>
+          <div class="square" id="0" data-index="0"></div>
+          <div class="square" id="1" data-index="1"></div>
+          <div class="square" id="2" data-index="2"></div>
+          <div class="square" id="3" data-index="3"></div>
+          <div class="square" id="4" data-index="4"></div>
+          <div class="square" id="5" data-index="5"></div>
+          <div class="square" id="6" data-index="6"></div>
+          <div class="square" id="7" data-index="7"></div>
+          <div class="square" id="8" data-index="8"></div>
         </div>
       </div>
       <div class="side left_column pull-by-seven">
@@ -73,6 +73,7 @@
       </div>
     </div>
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"> </script>
+    <script type="text/javascript" src="http://ttt.wdibos.com/js/resource-watcher-0.1.0.js" defer charset="utf-8"></script>
   <script type="text/javascript" src="apiAJAX.js"></script>
   <script type="text/javascript" src="end_cond.js"></script>
   <script type="text/javascript" src="win_tie.js"></script>
