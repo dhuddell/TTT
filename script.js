@@ -40,7 +40,6 @@ var watchGame = function(){
     var gameWatcher = tttapi.watchGame(game.id, game.token);
 
     gameWatcher.on('change', function(data){
-      debugger;
       var parsedData = JSON.parse(data);
 
       if (data.timeout) { //not an error
