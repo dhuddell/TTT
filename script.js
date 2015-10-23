@@ -34,32 +34,67 @@ var wins = 0;
 $('.wins').text(wins);
 var losses = 0;
 $('.losses').text(losses);
+var cell;
 
 
 var watchGame = function(){
     var gameWatcher = tttapi.watchGame(game.id, game.token);
-
     gameWatcher.on('change', function(data){
       var parsedData = JSON.parse(data);
-
       if (data.timeout) { //not an error
         this.gameWatcher.close();
         return console.warn(data.timeout);
       }
       var gameData = parsedData.game;
-      var cell = gameData.cell;
-      if(cell.value.toUpperCase() == 'O'){
-        waiting = false;
-        ++totalMoves;
-        $('.turn_banner').text("You're up, pup!");
-        $('#' + cell.index).text(cell.value.toUpperCase())
-        gameBoard[cell.index] = cell.value;
-      }
+      cell = gameData.cell;
+      console.log(cell);
+      if(joined){
+        remoteUpdate('x');
+      } else {remoteUpdate('o')};
+      if (winnerIs('x')|| winnerIs('o')){
+        getWinner()} else{getTie()}
     });
     gameWatcher.on('error', function(e){
       console.error('an error has occured with the stream', e);
     });
   };
+
+var remoteUpdate = function remoteUpdate(value){
+  if(cell.value.toUpperCase() == value){
+    waiting = false;
+    ++totalMoves;
+    $('.turn_banner').text("You're up, pup!");
+    $('#' + cell.index).text(cell.value.toUpperCase());
+    gameBoard[cell.index] = cell.value;
+  }
+}
+
+var updatePlayerTurn = function updatePlayerTurn(element, index, array){
+  if(element !== ''){
+    totalMoves++;
+    if(remote){
+      if(joined){
+        if(totalMoves%2){
+          waiting = false;
+        } else{
+          waiting = true;
+        }
+      } else {
+        if(totalMoves%2){
+          waiting = true;
+        } else{
+          waiting = false;
+        }
+      }
+    } else {
+      if(totalMoves%2){
+        playerX = false;
+      } else{
+        playerX = true;
+      }
+    }
+  }
+}
 
 ////////////////////////////////////////////////////////
 //    JQUERY
@@ -143,10 +178,7 @@ $('.new_game_remote').click(function(){
 
     watchGame();
     });
-    //MAKE TURN CHECKER
     $('.turn_banner').text("You're up, pup!");
-
-
     joined = false;
     waiting = false;
     $('.new_game_remote').hide();
@@ -176,6 +208,14 @@ $('.new_game_remote').click(function(){
       console.log(game.id);
       console.log(data);
       gameBoard = data.game.cells;
+      gameBoard.forEach(updatePlayerTurn);
+      defineMove();
+      if(playerX === true){
+        $('.turn_banner').text("X's turn, FLEX!");
+      } else {
+        $('.turn_banner').text("O's turn, YO!");
+      };
+
        $('.square').each(function(index){
         $(this).html(gameBoard[index].toUpperCase());
       });
@@ -183,13 +223,8 @@ $('.new_game_remote').click(function(){
     hideSecondary();
     $('#game_id').hide();
     $('.enter_game').hide();
-    defineMove();
     $(".square").css("pointer-events", "auto");
-    if(playerX === true){
-      $('.turn_banner').text("X's turn, FLEX!");
-    } else {
-      $('.turn_banner').text("O's turn, YO!");
-    };
+
 
   });
 // ENTER REMOTE GAME NEED TO ADD TURN CHECK AND TURNCOUNT ITERATOR
@@ -201,23 +236,29 @@ $('.enter_game_remote').click(function(){
       game.id = document.getElementById('game_id').value;
       console.log(game.id);
       console.log(data);
+      watchGame();
+
+      joined = true;
       gameBoard = data.game.cells;
+      gameBoard.forEach(updatePlayerTurn);
+      defineMove();
+      // if(joined === true){
+      //   $('.turn_banner').text("X's turn, FLEX!");
+      // } else {
+      //   $('.turn_banner').text("O's turn, YO!");
+      // };
+
       $('.square').each(function(index){
         $(this).html(gameBoard[index].toUpperCase());
       });
 
-      watchGame();
     });
     //MAKE TURN CHECKER
     $('.turn_banner').text("You're up, pup!");
-
-    joined = true;
-    waiting = false;
     hideSecondary();
     $('.enter_game_remote').hide();
     $('#game_id').hide();
     $('.enter_game').hide();
-    defineMove();
     $(".square").css("pointer-events", "auto");
 
   });
