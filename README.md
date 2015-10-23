@@ -24,17 +24,27 @@ Forms and landing div handled intuitively with JQuery.
 
 ##Game Play
 
-_Functioning win/loss/tie conditions handlers.
-_Moves registered through respective div's click handlers.
-_Intuitive navigation flow using Jquery.
-_All API functions are integrated directly into from-scratch HTML.
-_Win counters for X and O update after each win condition is reached.
+
+Functioning win/loss/tie conditions handlers.
+
+Moves registered through respective div's click handlers.
+
+Intuitive navigation flow using Jquery.
+
+All API functions are integrated directly into from-scratch HTML.
+
+Win counters for X and O update after each win condition is reached.
 
 
 ##Achieved Goals
 
-_Custom CSS and Jquery provide a neat, minimalist, and responsive design.
-_There are functional rhymes on every part of the page.
-_Integrated a custom lightweight grid framework based on elements of Skeleton and Bootstrap.
-_Organized code to separate concerns and compartmentalize functional responsibilities.
-_In-layout banner updates used to the current game state and their options.
+
+Custom CSS and Jquery provide a neat, minimalist, and responsive design.
+
+There are functional rhymes on every part of the page.
+
+Integrated a custom lightweight grid framework based on elements of Skeleton and Bootstrap.
+
+Organized code to separate concerns and compartmentalize functional responsibilities.
+
+In-layout banner updates used to the current game state and their options.
